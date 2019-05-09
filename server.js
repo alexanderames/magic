@@ -31,6 +31,7 @@ app.post('/secret', (req, res) => {
           res.send('inserted into databse');
         }
       })
+
       db.close();
     }
   })
@@ -47,8 +48,24 @@ app.get('/:param*', (req, res) => {
         const collection = db.collection('names');
 
         if (name === 'deleteall') {
-          collection.remove
+          collection.remove({});
+          res.send('databse reset');
+        } else {
+          collection.find({name: name}).toArray((err, result) => {
+            if (err) {
+              console.log(err);
+            } else if (result.length) {
+              const card = result[result.length-1].card + '.png';
+              res.sendFile(path.join(__dirname + '/cards/' + card));
+            } else {
+              res.sendStatus(404);
+            }
+            
+            db.close();
+          })
         }
      }
    })
 })
+
+app.listen(PORT, () => console.log('Server listening on port ${PORT}'));
