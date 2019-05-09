@@ -35,3 +35,19 @@ app.post('/secret', (req, res) => {
     }
   })
 })
+
+app.get('/:param*', (req, res) => {
+  const name = req.url.slice(1).toLowerCase();
+
+   MongoClient.connect(URI, {useNewUrlParser: true}, (err, client) => {
+     if (err) {
+       console.log(err);
+     } else {
+        const db = client.db(DB_NAME);
+        const collection = db.collection('names');
+
+
+
+     }
+   })
+})
