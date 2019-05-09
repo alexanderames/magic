@@ -46,8 +46,9 @@ app.get('/:param*', (req, res) => {
         const db = client.db(DB_NAME);
         const collection = db.collection('names');
 
-
-
+        if (name === 'deleteall') {
+          collection.remove
+        }
      }
    })
 })
