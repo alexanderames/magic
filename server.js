@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.get('/secret', (req, res) => res.sendFile(path.join(__dirname, 'secret.html')));
 
 app.post('/secret', (req, res) => {
-  MongoClient.connect(URI, { useNewUrlParser: true }, (err, db) => {
+  MongoClient.connect(URI, { useNewUrlParser: true }, (err, client) => {
     if (err) {
       console.log(err);
     } else {
@@ -32,7 +32,7 @@ app.post('/secret', (req, res) => {
         }
       })
 
-      db.close();
+      client.close();
     }
   })
 })
@@ -60,8 +60,8 @@ app.get('/:param*', (req, res) => {
             } else {
               res.sendStatus(404);
             }
-            
-            db.close();
+
+            client.close();
           })
         }
      }
